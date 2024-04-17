@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    @font-face {
+        font-family: Koulen;
+        font-style: normal;
+        font-weight: 400;
+        /*font-display: swap;*/
+        src: url("../Koulen-Regular.ttf") format('ttf');
+    }
+}
+@layer{
+    .authorization-input{
+        @apply w-full h-12 bg-inputs placeholder-textInputs text-black-button indent-5 rounded-xl
+    }
+}
+body{
+    overflow: hidden;
+}
