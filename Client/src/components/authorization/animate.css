@@ -1,0 +1,19 @@
+@keyframes isShow {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes isHidden {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+.TEST{
+    transform: translateX(10px);
+}

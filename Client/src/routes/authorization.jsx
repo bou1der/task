@@ -6,14 +6,10 @@ const Authorization = ({}) =>{
 
     const handleAnimateTransition = () =>{
         const bg = document.getElementById("bg-authorization")
-        if (!testState){
-            bg.style.backgroundColor = "#164e63"
-        }else {
-            bg.style.backgroundColor = "#0f766e"
-        }
+        !testState ? bg.style.backgroundColor = "#164e63" : bg.style.backgroundColor = "#0f766e"
         setTimeout(()=>{
             setState(!testState)
-        },800)
+        },600)
     }
     return(
         <>
