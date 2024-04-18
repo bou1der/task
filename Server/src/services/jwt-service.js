@@ -2,7 +2,7 @@ const jwtTokenHandler = require('jsonwebtoken')
 const Tokens  = require('../models/token-database-model')
 
 module.exports.genTokenHandler = async (data) =>{
-    const refreshToken = jwtTokenHandler.sign(data,process.env.JWT_REFRESH_KEY,{expiresIn:'20m'})
+    const refreshToken =jwtTokenHandler.sign(data,process.env.JWT_REFRESH_KEY,{expiresIn:'20m'})
     const accessToken = jwtTokenHandler.sign(data,process.env.JWT_ACCESS_KEY,{expiresIn:'20d'})
     return{
         refresh:refreshToken,

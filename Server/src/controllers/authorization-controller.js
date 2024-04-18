@@ -6,13 +6,13 @@ const hash = require('bcryptjs')
 
 module.exports.register = async (req, res) => {
     try {
-        const {name, login, password} = req.body
+        const {names, login, password} = req.body
         const user  = await Users.findOne({where:{login}})
         if (user){
             return ErrorHandler(res,300,"Данный пользователь уже существует","Подберите другой логин",req.body);
         }
         const hashPassword = await hash.hashSync(password,10)
-        const newUser = await Users.create({name:name[0],surname:name[1],patronymic:name[2],login:login,password:hashPassword})
+        const newUser = await Users.create({name:names.name,surname:names.surname,patronymic:names.patronymic,login:login,password:hashPassword})
 
         const tokens = await TokenService.genTokenHandler({id:newUser.dataValues.id, name:newUser.dataValues.name})
         await TokenService.tokenSaveHandler(newUser.dataValues.id,tokens.refresh)
@@ -55,12 +55,13 @@ module.exports.refresh = async (req, res) => {
     try {
         const {refresh} = req.cookies
         if (!refresh){
-            return ErrorHandler(req,400,'Токен ненайден', "Ненайден токен в cookies", req.cookies)
+            return ErrorHandler(req,408,'Токен ненайден', "Ненайден токен в cookies", req.cookies)
         }
         const userData = await TokenService.checkToken(refresh,"refresh")
         const existRefreshToken = await TokensModel.findOne({where:{refresh}})
         if (!userData || !existRefreshToken){
-            ErrorHandler(res,404,"Ошибка проверки токена", "Токен не прошел проверку", req.cookies)
+            res.clearCookie('refresh')
+            ErrorHandler(res,408,"Ошибка проверки токена", "Токен не прошел проверку", req.cookies)
         }
         const user = await Users.findOne({where:{id:userData.id}})
 
